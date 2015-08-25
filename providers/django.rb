@@ -26,7 +26,7 @@ action :before_compile do
 
   include_recipe 'python'
 
-  new_resource.migration_command "#{::File.join(new_resource.virtualenv, "bin", "python")} manage.py syncdb --noinput" if !new_resource.migration_command
+  new_resource.migration_command "#{::File.join(new_resource.virtualenv, "bin", "python")} #{new_resource.manage_file} syncdb --noinput" if !new_resource.migration_command
 
   new_resource.symlink_before_migrate.update({
     new_resource.local_settings_base => new_resource.local_settings_file,
@@ -82,7 +82,7 @@ action :before_symlink do
 
   if new_resource.collectstatic
     cmd = new_resource.collectstatic.is_a?(String) ? new_resource.collectstatic : "collectstatic --noinput"
-    execute "#{::File.join(new_resource.virtualenv, "bin", "python")} manage.py #{cmd}" do
+    execute "#{::File.join(new_resource.virtualenv, "bin", "python")} #{new_resource.manage_file} #{cmd}" do
       user new_resource.owner
       group new_resource.group
       cwd new_resource.release_path
