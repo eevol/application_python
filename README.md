@@ -1,4 +1,4 @@
-application_python Cookbook (Needle-Cookbooks Fork)
+application_python Cookbook (eevol Fork)
 ===================================================
 This our own fork of the application_python cookbook.
 
@@ -44,6 +44,7 @@ A new virtualenv will be created for the application in "#{path}/shared/env"; pi
 - manage_file: the path to the manage.py file to execute migrations etc
 - settings_template: the name of template that will be rendered to create the local settings file; if specified it will be looked up in the application cookbook. Defaults to "settings.py.erb" from this cookbook
 - settings: a Hash of additional settings that will be made available to the template
+- secret_key: the secret key written to config
 - database: a block containing additional parameters for configuring the database connection
 - legacy_database_settings: if true, the default settings template will generate legacy database config variables. Defaults to false
 - debug: used by the default settings template to control debugging. Defaults to false
