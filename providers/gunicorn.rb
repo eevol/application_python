@@ -113,10 +113,19 @@ end
 protected
 
 def install_packages
+  python_virtualenv new_resource.virtualenv do
+    path new_resource.virtualenv
+    owner new_resource.owner
+    group new_resource.group
+    action :create
+  end
+
   new_resource.packages.each do |name, ver|
     python_pip name do
       version ver if ver && ver.length > 0
       virtualenv new_resource.virtualenv
+      user new_resource.owner
+      group new_resource.group
       action :install
     end
   end
