@@ -86,8 +86,7 @@ action :before_deploy do
       raise "No Django deployment resource found" unless django_resource
       gunicorn_command = new_resource.virtualenv.nil? ? "gunicorn" : "#{::File.join(new_resource.virtualenv, "bin", "gunicorn")}"
       django_settings_module = "-e DJANGO_SETTINGS_MODULE=#{new_resource.name}.settings.#{new_resource.django_settings_module}"
-      gunicorn_config = "-c #{new_resource.path}/shared/gunicorn_config.py"
-      base_command = "#{gunicorn_command} #{django_settings_module} #{gunicorn_config}"
+      base_command = "#{gunicorn_command} #{django_settings_module} #{new_resource.name}.wsgi"
     else
       gunicorn_command = new_resource.virtualenv.nil? ? "gunicorn" : "#{::File.join(new_resource.virtualenv, "bin", "gunicorn")}"
       base_command = "#{gunicorn_command} #{new_resource.app_module}"
